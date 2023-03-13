@@ -1,8 +1,8 @@
 # Composite
+Composite itself is an MVC framework. It provides basic MVC functionality for fast UI building.
 ## Installation
 Add ```"com.loderunner.composite": "https://github.com/xloderunnerx/Composite.git",``` to the package manifest of your project.
 ## Usage
-Composite itself is an MVC framework. It provides basic MVC functionality for fast UI building.
 ### Abstract Composition Root
 AbstractCompositionRoot is a class where all features should be placed and binded.
 ```
