@@ -99,3 +99,107 @@ public class HelloWorldConfiguration : AbstractConfiguration
 }
 ```
 
+## Signal Bus
+Controllers can communicate with each other by SignalBus.
+Signal is a class that may or may not contain parametrs as fields.
+```
+public class HelloWorldSignal
+{
+	public string helloWorld;
+}
+```
+or
+```
+public class HelloWorldSignal
+{
+}
+```
+### Signal Declaration
+Signals should be declared in DeclareSignals method of Controllers
+```
+public class HelloWorldController : AbstractController
+{
+	private HelloWorldView view;
+    private HelloWorldConfiguration configuration;
+
+    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+    {
+        this.configuration = configuration;
+        this.view = view;
+    }
+
+    public override void Initialize()
+    {
+        
+    }
+
+	public override void DeclareSignals() // Signal Declaration.
+    {
+		DeclareSignal<HelloWorldSignal>();
+	}
+
+	public override void SubscribeToSignals()
+	{
+		SubscribeToSignal<HelloWorldSignal>(signal => Debug.Log(signal.));
+	}
+}
+```
+### Signal Subscription
+Controllers should subscribe to Signals in SubscribeToSignals method of Controllers.
+```
+public class HelloWorldController : AbstractController
+{
+	private HelloWorldView view;
+    private HelloWorldConfiguration configuration;
+
+    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+    {
+        this.configuration = configuration;
+        this.view = view;
+    }
+
+    public override void Initialize()
+    {
+        
+    }
+
+	public override void DeclareSignals() // Signal Declaration.
+    {
+		DeclareSignal<HelloWorldSignal>();
+	}
+
+	public override void SubscribeToSignals()
+	{
+		SubscribeToSignal<HelloWorldSignal>(signal => Debug.Log(signal.helloWorld)); // Subscription that prints Signal parametr.
+	}
+}
+```
+### Firing Signals
+```
+public class HelloWorldController : AbstractController
+{
+	private HelloWorldView view;
+    private HelloWorldConfiguration configuration;
+
+    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+    {
+        this.configuration = configuration;
+        this.view = view;
+    }
+
+    public override void Initialize()
+    {
+        TryFireSignal(new HelloWorldSignal(configuration.helloWorld)); // Firing Signal with parametr from Configuration.
+    }
+
+	public override void DeclareSignals() // Signal Declaration.
+    {
+		DeclareSignal<HelloWorldSignal>();
+	}
+
+	public override void SubscribeToSignals()
+	{
+		SubscribeToSignal<HelloWorldSignal>(signal => Debug.Log(signal.helloWorld)); // Subscription that prints Signal parametr.
+	}
+}
+```
