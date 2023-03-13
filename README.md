@@ -58,7 +58,7 @@ AbstractController is a class for logic.
 public class HelloWorldController : AbstractController, IUpdatable
 {
 	private HelloWorldView view;
-    private HelloWorldConfiguration configuration;
+	private HelloWorldConfiguration configuration;
 
     public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
     {
