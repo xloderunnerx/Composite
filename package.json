@@ -2,7 +2,7 @@
   "name": "com.loderunner.composite",
   "version": "1.0.0",
   "displayName": "Composite",
-  "description": "Composite is a lightweight MVC framework based on Extenject(aka Zenject). Composite provides basic MVC functionality such as CompositionRoot for bindings installing, Features that can incapsulate Controllers and Views and Signal Bus that allow communivation between features.",
+  "description": "Composite is an MVC framework based on Extenject(aka Zenject). Composite provides basic MVC functionality for UI building such as CompositionRoot for bindings installing, Features that can incapsulate Controllers and Views, Signal Bus that allow communication between features.",
   "unity": "2021.3",
   "author": {
     "name": "Daniil Kotelnikov",
