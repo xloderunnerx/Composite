@@ -42,6 +42,7 @@ public class HelloWorldFeature : AbstractFeature
         public override void InstallBindings() // Installing Controllers, Views and other classes.
         {
             CompositionRoot.Bind<HelloWorldModel>(); // Regular class binding.
+            CompositionRoot.BindFromHierarchy<HelloWorldView>(); // View binding from scene hierarchy.
             CompositionRoot.BindController<HelloWorldController>(); // Controller binding.   
         }
 
@@ -53,8 +54,48 @@ public class HelloWorldFeature : AbstractFeature
 ```
 ### Abstract Controller
 AbstractController is a class for logic.
+```
+public class HelloWorldController : AbstractController, IUpdatable
+{
+	private HelloWorldView view;
+    private HelloWorldConfiguration configuration;
+
+    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+    {
+        this.configuration = configuration;
+        this.view = view;
+    }
+
+    public override void Initialize()
+    {
+        Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" once from configuration.
+        view.SetHelloWorldText(configuration.helloWorld) // Set "Hello Wolrld!" to View once from configuration
+    }
+
+    public void Update()
+    {
+       	Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" each frame from configuration.
+    }
+}
+
+```
 ### Abstract View
 AbstractView is a class for all scene related objects.
+```
+public class HelloWorldView : AbstractView
+{
+	[SerializeField] private TextMeshProUGUI helloWorldText;
+
+	public void SetHelloWorldText(string value) => helloWorldText.text = value;
+}
+```
 ### Abstract Configuration
 AbstractConfiguration is a class inherited from ScriptableObject. Should be set to Composition Root configurations field in case to be binded. Should contain all predefined settings for feature.
+```
+[CreateAssetMenu(menuName = "Configuration/Features/HelloWorld/HelloWorldConfiguration", fileName = "HelloWorldConfiguration")]
+public class HelloWorldConfiguration : AbstractConfiguration
+{
+	public string helloWorld;
+}
+```
 
