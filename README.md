@@ -203,3 +203,29 @@ public class HelloWorldController : AbstractController
 	}
 }
 ```
+## Coroutines
+Controllers can start coroutines too.
+```
+public class HelloWorldController : AbstractController
+{
+	private HelloWorldView view;
+    private HelloWorldConfiguration configuration;
+
+    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+    {
+        this.configuration = configuration;
+        this.view = view;
+    }
+
+    public override void Initialize()
+    {
+        StartCoroutine(Print()); // Prints "Hello World!" from configuration in 5 seconds.
+    }
+
+    public IEnumerator Print()
+	{
+		yield return new WaitForSeconds(5);
+		Debug.Log(configuration.helloWorld);
+	}
+}
+```
