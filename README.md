@@ -60,22 +60,22 @@ public class HelloWorldController : AbstractController, IUpdatable
 	private HelloWorldView view;
 	private HelloWorldConfiguration configuration;
 
-    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
-    {
-        this.configuration = configuration;
-        this.view = view;
-    }
+	public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+	{
+	    this.configuration = configuration;
+	    this.view = view;
+	}
 
-    public override void Initialize()
-    {
-        Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" once from configuration.
-        view.SetHelloWorldText(configuration.helloWorld) // Set "Hello Wolrld!" to View once from configuration
-    }
+	public override void Initialize()
+	{
+	    Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" once from configuration.
+	    view.SetHelloWorldText(configuration.helloWorld) // Set "Hello Wolrld!" to View once from configuration
+	}
 
-    public void Update()
-    {
-       	Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" each frame from configuration.
-    }
+	public void Update()
+	{
+	   	Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" each frame from configuration.
+	}
 }
 
 ```
