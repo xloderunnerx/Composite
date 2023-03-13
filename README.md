@@ -9,10 +9,10 @@ AbstractCompositionRoot is a class where all features should be placed and binde
 public class CompositionRoot : AbstractCompositionRoot
 {
 	private void Awake()
-    {
+	{
 		BindConfigurations(); // Configuration binding from Configurations field.
-	    BindSignalBus(); // Signal Bus binding.
-        BindFeatures(); // Features binding.
+		BindSignalBus(); // Signal Bus binding.
+		BindFeatures(); // Features binding.
 	}
 
 	private void Start()
