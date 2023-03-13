@@ -74,7 +74,7 @@ public class HelloWorldController : AbstractController, IUpdatable
 
 	public void Update()
 	{
-	   	Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" each frame from configuration.
+		Debug.Log(configuration.helloWorld); // Prints "Hello Wolrld!" each frame from configuration.
 	}
 }
 
@@ -120,21 +120,21 @@ Signals should be declared in DeclareSignals method of Controllers
 public class HelloWorldController : AbstractController
 {
 	private HelloWorldView view;
-    private HelloWorldConfiguration configuration;
+	private HelloWorldConfiguration configuration;
 
-    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
-    {
-        this.configuration = configuration;
-        this.view = view;
-    }
+	public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+	{
+		this.configuration = configuration;
+		this.view = view;
+	}
 
-    public override void Initialize()
-    {
+	public override void Initialize()
+	{
         
-    }
+	}
 
 	public override void DeclareSignals() // Signal Declaration.
-    {
+	{
 		DeclareSignal<HelloWorldSignal>();
 	}
 
@@ -150,21 +150,21 @@ Controllers should subscribe to Signals in SubscribeToSignals method of Controll
 public class HelloWorldController : AbstractController
 {
 	private HelloWorldView view;
-    private HelloWorldConfiguration configuration;
+	private HelloWorldConfiguration configuration;
 
-    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
-    {
-        this.configuration = configuration;
-        this.view = view;
-    }
+	public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+	{
+		this.configuration = configuration;
+		this.view = view;
+	}
 
-    public override void Initialize()
-    {
+	public override void Initialize()
+	{
         
-    }
+	}
 
 	public override void DeclareSignals() // Signal Declaration.
-    {
+	{
 		DeclareSignal<HelloWorldSignal>();
 	}
 
@@ -179,21 +179,21 @@ public class HelloWorldController : AbstractController
 public class HelloWorldController : AbstractController
 {
 	private HelloWorldView view;
-    private HelloWorldConfiguration configuration;
+	private HelloWorldConfiguration configuration;
 
-    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
-    {
-        this.configuration = configuration;
-        this.view = view;
-    }
+	public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+	{
+		this.configuration = configuration;
+		this.view = view;
+	}
 
-    public override void Initialize()
-    {
-        TryFireSignal(new HelloWorldSignal(configuration.helloWorld)); // Firing Signal with parametr from Configuration.
-    }
+	public override void Initialize()
+	{
+		TryFireSignal(new HelloWorldSignal(configuration.helloWorld)); // Firing Signal with parametr from Configuration.
+	}
 
 	public override void DeclareSignals() // Signal Declaration.
-    {
+	{
 		DeclareSignal<HelloWorldSignal>();
 	}
 
@@ -209,20 +209,20 @@ Controllers can start coroutines too.
 public class HelloWorldController : AbstractController
 {
 	private HelloWorldView view;
-    private HelloWorldConfiguration configuration;
+	private HelloWorldConfiguration configuration;
 
-    public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
-    {
-        this.configuration = configuration;
-        this.view = view;
-    }
+	public HelloWorldController(HelloWorldView view, HelloWorldConfiguration configuration) // Constructor inject.
+	{
+		this.configuration = configuration;
+		this.view = view;
+	}
 
-    public override void Initialize()
-    {
-        StartCoroutine(Print()); // Prints "Hello World!" from configuration in 5 seconds.
-    }
+	public override void Initialize()
+	{
+		StartCoroutine(Print()); // Prints "Hello World!" from configuration in 5 seconds.
+	}
 
-    public IEnumerator Print()
+	public IEnumerator Print()
 	{
 		yield return new WaitForSeconds(5);
 		Debug.Log(configuration.helloWorld);
