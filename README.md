@@ -229,3 +229,6 @@ public class HelloWorldController : AbstractController
 	}
 }
 ```
+## Feature Template Generator
+There is a Feature Template Generator that can help you with creating new features faster. 
+Create -> Utils -> FeatureGenerator.
