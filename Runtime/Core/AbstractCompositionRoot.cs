@@ -68,6 +68,11 @@ namespace Composite.Core
             controllers.Where(controller => controller is IUpdatable).ToList().ForEach(controller => (controller as IUpdatable).Update());
         }
 
+        public void OnDestroyControllers()
+        {
+            controllers.Where(controller => controller is IOnDestroyable).ToList().ForEach(controller => (controller as IOnDestroyable).OnDestroy());
+        }
+
         public T GetInstance<T>() => container.Resolve<T>();
 
         public void DeclareSignals()
