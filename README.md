@@ -1,5 +1,5 @@
 # Composite
-Composite itself is an MVC framework. It provides basic MVC functionality for fast UI building.
+Composite itself is an MVC framework based on Zenject. It provides basic MVC functionality for fast UI building.
 ## Installation
 Add ```"com.loderunner.composite": "https://github.com/xloderunnerx/Composite.git",``` to the package manifest of your project.
 ## Usage
