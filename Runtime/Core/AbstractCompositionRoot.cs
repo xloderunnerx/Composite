@@ -73,7 +73,7 @@ namespace Composite.Core
             controllers.Where(controller => controller is IOnDestroyable).ToList().ForEach(controller => (controller as IOnDestroyable).OnDestroy());
         }
 
-        public void OnApplicationQuetControllers()
+        public void OnApplicationQuitControllers()
         {
             controllers.Where(controller => controller is IOnApplicationQuitable).ToList().ForEach(controller => (controller as IOnApplicationQuitable).OnApplicationQuit());
         }
