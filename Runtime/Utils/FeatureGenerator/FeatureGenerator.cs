@@ -1,40 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+using UnityEditor;
 using UnityEngine;
+using System.IO;
 
-namespace Composite.Utils.FeatureGenerator
+public class FeatureGeneratorWindow : EditorWindow
 {
-    [CreateAssetMenu(fileName = "FeatureGenerator", menuName = "Utils/FeatureGenerator")]
-    public class FeatureGenerator : ScriptableObject
-    {
-        public string featureName;
-        public bool generateModel;
-        public bool generateView;
-        public bool generateController;
-        public bool generateConfiguration;
-        public bool generateFeature;
+    private string featureName;
+    private bool generateModel;
+    private bool generateView;
+    private bool generateController;
+    private bool generateConfiguration;
 
-        private void OnValidate()
+    [MenuItem("Tools/Feature Generator")]
+    public static void ShowWindow()
+    {
+        GetWindow<FeatureGeneratorWindow>("Feature Generator");
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Label("Generate New Feature", EditorStyles.boldLabel);
+
+        featureName = EditorGUILayout.TextField("Feature Name", featureName);
+        generateModel = EditorGUILayout.Toggle("Generate Model", generateModel);
+        generateView = EditorGUILayout.Toggle("Generate View", generateView);
+        generateController = EditorGUILayout.Toggle("Generate Controller", generateController);
+        generateConfiguration = EditorGUILayout.Toggle("Generate Configuration", generateConfiguration);
+
+        if (GUILayout.Button("Generate Feature"))
         {
             GenerateFeature();
         }
+    }
 
-        public void GenerateFeature()
+    private void GenerateFeature()
+    {
+        if (string.IsNullOrEmpty(featureName))
         {
-            if (!generateFeature)
-                return;
-            generateFeature = false;
-            var directoryPath = $"{Application.dataPath}/Scripts/App/Features/{featureName}";
-            if (Directory.Exists(directoryPath))
-            {
-                Debug.LogError("Feature already exists!");
-                return;
-            }
-            Directory.CreateDirectory(directoryPath);
-            var featurePath = $"{directoryPath}/{featureName}Feature.cs";
-            File.Create(featurePath).Close();
-            var streamWriter = new StreamWriter(featurePath);
+            Debug.LogError("Feature name cannot be empty!");
+            return;
+        }
+
+        var directoryPath = $"{Application.dataPath}/Scripts/App/Features/{featureName}";
+        if (Directory.Exists(directoryPath))
+        {
+            Debug.LogError("Feature already exists!");
+            return;
+        }
+
+        Directory.CreateDirectory(directoryPath);
+        GenerateFeatureScript(directoryPath);
+
+        if (generateModel) GenerateModel(directoryPath);
+        if (generateView) GenerateView(directoryPath);
+        if (generateController) GenerateController(directoryPath);
+        if (generateConfiguration) GenerateConfiguration(directoryPath);
+
+        AssetDatabase.Refresh();
+        Debug.Log($"Feature {featureName} generated successfully.");
+    }
+
+    private void GenerateFeatureScript(string directoryPath)
+    {
+        var featurePath = $"{directoryPath}/{featureName}Feature.cs";
+        using (var streamWriter = new StreamWriter(featurePath))
+        {
             streamWriter.Write(
                 $"using Composite.Core;" +
                 $"\n" +
@@ -57,20 +86,16 @@ namespace Composite.Utils.FeatureGenerator
                 $"\t}}" +
                 $"\n" +
                 $"}}");
-            streamWriter.Close();
-            if (generateController) GenerateController(directoryPath);
-            if (generateConfiguration) GenerateConfiguration(directoryPath);
-            if (generateView) GenerateView(directoryPath);
-            if (generateModel) GenerateModel(directoryPath);
         }
+    }
 
-        public void GenerateController(string featureDirectoryPath)
+    private void GenerateController(string featureDirectoryPath)
+    {
+        var directoryPath = $"{featureDirectoryPath}/Controllers";
+        Directory.CreateDirectory(directoryPath);
+        var controllerPath = $"{directoryPath}/{featureName}Controller.cs";
+        using (var streamWriter = new StreamWriter(controllerPath))
         {
-            var directoryPath = $"{featureDirectoryPath}/Controllers";
-            Directory.CreateDirectory(directoryPath);
-            var controllerPath = $"{directoryPath}/{featureName}Controller.cs";
-            File.Create(controllerPath).Close();
-            var streamWriter = new StreamWriter(controllerPath);
             streamWriter.Write(
                 $"using Composite.Core;" +
                 $"\n" +
@@ -87,16 +112,16 @@ namespace Composite.Utils.FeatureGenerator
                 $"\t}}" +
                 $"\n" +
                 $"}}");
-            streamWriter.Close();
         }
+    }
 
-        public void GenerateConfiguration(string featureDirectoryPath)
+    private void GenerateConfiguration(string featureDirectoryPath)
+    {
+        var directoryPath = $"{featureDirectoryPath}/Configurations";
+        Directory.CreateDirectory(directoryPath);
+        var configurationPath = $"{directoryPath}/{featureName}Configuration.cs";
+        using (var streamWriter = new StreamWriter(configurationPath))
         {
-            var directoryPath = $"{featureDirectoryPath}/Configurations";
-            Directory.CreateDirectory(directoryPath);
-            var configurationPath = $"{directoryPath}/{featureName}Configuration.cs";
-            File.Create(configurationPath).Close();
-            var streamWriter = new StreamWriter(configurationPath);
             streamWriter.Write(
                 $"using UnityEngine;" +
                 $"\n" +
@@ -112,16 +137,16 @@ namespace Composite.Utils.FeatureGenerator
                 $"\t}}" +
                 $"\n" +
                 $"}}");
-            streamWriter.Close();
         }
+    }
 
-        public void GenerateView(string featureDirectoryPath)
+    private void GenerateView(string featureDirectoryPath)
+    {
+        var directoryPath = $"{featureDirectoryPath}/Views";
+        Directory.CreateDirectory(directoryPath);
+        var viewPath = $"{directoryPath}/{featureName}View.cs";
+        using (var streamWriter = new StreamWriter(viewPath))
         {
-            var directoryPath = $"{featureDirectoryPath}/Views";
-            Directory.CreateDirectory(directoryPath);
-            var viewPath = $"{directoryPath}/{featureName}View.cs";
-            File.Create(viewPath).Close();
-            var streamWriter = new StreamWriter(viewPath);
             streamWriter.Write(
                 $"using Composite.Core;" +
                 $"\n" +
@@ -137,16 +162,16 @@ namespace Composite.Utils.FeatureGenerator
                 $"\t}}" +
                 $"\n" +
                 $"}}");
-            streamWriter.Close();
         }
+    }
 
-        public void GenerateModel(string featureDirectoryPath)
+    private void GenerateModel(string featureDirectoryPath)
+    {
+        var directoryPath = $"{featureDirectoryPath}/Model";
+        Directory.CreateDirectory(directoryPath);
+        var modelPath = $"{directoryPath}/{featureName}Model.cs";
+        using (var streamWriter = new StreamWriter(modelPath))
         {
-            var directoryPath = $"{featureDirectoryPath}/Model";
-            Directory.CreateDirectory(directoryPath);
-            var modelPath = $"{directoryPath}/{featureName}Model.cs";
-            File.Create(modelPath).Close();
-            var streamWriter = new StreamWriter(modelPath);
             streamWriter.Write(
                 $"namespace App.Features.{featureName}\n" +
                 $"{{" +
@@ -157,7 +182,6 @@ namespace Composite.Utils.FeatureGenerator
                 $"\t}}" +
                 $"\n" +
                 $"}}");
-            streamWriter.Close();
         }
     }
 }
