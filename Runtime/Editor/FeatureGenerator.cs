@@ -1,7 +1,10 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using System.IO;
 
+#if UNITY_EDITOR
 public class FeatureGeneratorWindow : EditorWindow
 {
     private string featureName;
@@ -185,3 +188,4 @@ public class FeatureGeneratorWindow : EditorWindow
         }
     }
 }
+#endif

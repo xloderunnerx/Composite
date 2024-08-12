@@ -1,6 +1,9 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
+#if UNITY_EDITOR
 public static class ControllerScriptGenerator
 {
     [MenuItem("Assets/Create/CustomController C# Script", false, 80)]
@@ -48,3 +51,4 @@ public class {className} : AbstractController
         return path;
     }
 }
+#endif
