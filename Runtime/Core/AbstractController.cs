@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 namespace Composite.Core
 {
@@ -15,9 +16,9 @@ namespace Composite.Core
 
         public abstract void Initialize();
 
-        public void StartCoroutine(IEnumerator coroutine)
+        public Coroutine StartCoroutine(IEnumerator coroutine)
         {
-            compositionRoot.StartCoroutine(coroutine);
+            return compositionRoot.StartCoroutine(coroutine);
         }
 
         public void StopCoroutine(IEnumerator coroutine)
